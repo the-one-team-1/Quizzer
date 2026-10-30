@@ -22,7 +22,7 @@ Quizzer is an educational application for quizzes. Using the application, teache
 - add, edit and delete questions
 - check and give feedback 
 
-## technologies
+## Technologies
 - java
 - spring boot
 - maven 
