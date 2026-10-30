@@ -20,7 +20,11 @@ Quizzer is an educational application for quizzes. Using the application, teache
 ## Teacher interface
 - create and manage quizzes
 - add, edit and delete questions
-- check and give feedback 
+- check and give feedback
+
+# Development Approach
+
+The project is developed incrementally through Sprints. Each Sprint introduces new features based on the Product Owner's requirements.
 
 ## Technologies
 - java
