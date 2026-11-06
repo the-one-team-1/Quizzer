@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Quiz | Quizzer</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+            <span class="brand-icon">Q</span>
+            <span>Quizzer</span>
+        </div>
+
+        <nav>
+            <a href="#" class="nav-link active">Quizzes</a>
+            <a href="#" class="nav-link">Dashboard</a>
+        </nav>
+
+        <div class="user-profile">
+            <span class="avatar">T</span>
+            <span>Teacher</span>
+        </div>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="page-container">
+
+        <!-- Page Heading -->
+        <div class="page-heading">
+
+            <p class="breadcrumb">Quizzes / Create new quiz</p>
+
+            <h1>Create a new quiz</h1>
+
+            <p class="subtitle">
+                Create a quiz to help students learn and test their knowledge.
+            </p>
+
+        </div>
+
+
+        <!-- Success Message -->
+        <div th:if="${param.success}" class="success-message">
+            Quiz successfully saved!
+        </div>
+
+
+        <!-- Quiz Form Card -->
+        <section class="form-card">
+
+            <div class="card-heading">
+
+                <div>
+                    <h2>Quiz information</h2>
+                    <p>Enter the basic details of your quiz.</p>
+                </div>
+
+                <span class="step-label">STEP 1 OF 1</span>
+
+            </div>
+
+
+            <!-- Quiz Form -->
+            <form th:action="@{/quizzes}"
+                  th:object="${quiz}"
+                  method="post">
+
+
+                <!-- Quiz Name -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Quiz name <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        th:field="*{name}"
+                        placeholder="e.g. The Scrum Framework"
+                        required
+                    >
+
+                    <small>
+                        Choose a clear name for your quiz.
+                    </small>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="form-group">
+
+                    <label for="description">
+                        Description <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="description"
+                        th:field="*{description}"
+                        rows="4"
+                        placeholder="What will students learn from this quiz?"
+                        required
+                    ></textarea>
+
+                    <small>
+                        Briefly explain the topics covered in this quiz.
+                    </small>
+
+                </div>
+
+
+                <!-- Course Code -->
+                <div class="form-group">
+
+                    <label for="courseCode">
+                        Course code <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="courseCode"
+                        th:field="*{courseCode}"
+                        placeholder="e.g. SOF005AS3AE"
+                        required
+                    >
+
+                    <small>
+                        Enter the Haaga-Helia course code.
+                    </small>
+
+                </div>
+
+
+                <!-- Published Toggle -->
+                <div class="publish-section">
+                    <div>
+                        <h3>Publish quiz</h3>
+                        <p>Make this quiz available to students.</p>
+                    </div>
+
+                    <input type="checkbox" th:field="*{published}">
+                    <span>Published</span>
+                </div>
+
+
+                <!-- Form Buttons -->
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="cancel-button"
+                    >
+                        Clear form
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+                        Add Quiz <span>→</span>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Footer -->
+        <p class="footer-note">
+            Quizzer · Learning starts with curiosity.
+        </p>
+
+    </main>
+
+</body>
+</html>
