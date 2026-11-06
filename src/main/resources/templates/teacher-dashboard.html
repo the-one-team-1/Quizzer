@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard | Quizzer</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+            <span class="brand-icon">Q</span>
+            <span>Quizzer</span>
+        </div>
+
+        <nav>
+            <a th:href="@{/}" class="nav-link active">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+
+        <div class="user-profile">
+            <span class="avatar">T</span>
+            <span>Teacher</span>
+        </div>
+
+    </header>
+
+    <!-- Main Content -->
+    <main class="page-container">
+
+        <!-- Page Heading -->
+        <div class="page-heading">
+
+            <p class="breadcrumb">Dashboard / Quizzes</p>
+
+            <h1>Teacher Dashboard</h1>
+
+            <p class="subtitle">
+                Manage your quizzes and view their publication status.
+            </p>
+
+        </div>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section">
+
+            <!-- Section Heading -->
+            <div class="card-heading">
+
+                <div>
+                    <h2>Your quizzes</h2>
+                    <p>All quizzes you have created.</p>
+                </div>
+
+                <a th:href="@{/quizzes/new}" class="submit-button">
+                    + Create new quiz
+                </a>
+
+            </div>
+
+            <!-- Empty State -->
+            <div th:if="${#lists.isEmpty(quizzes)}" class="empty-state">
+
+                <h3>No quizzes yet</h3>
+
+                <p>
+                    You have not created any quizzes.
+                    Click Create new quiz to get started.
+                </p>
+
+            </div>
+
+            <!-- Quiz Table -->
+            <div th:if="${not #lists.isEmpty(quizzes)}"
+                 class="quiz-table-container">
+
+                <table class="quiz-table">
+
+                    <thead>
+                        <tr>
+                            <th>Quiz name</th>
+                            <th>Course code</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="quiz : ${quizzes}">
+
+                            <td th:text="${quiz.name}">
+                                Quiz name
+                            </td>
+
+                            <td th:text="${quiz.courseCode}">
+                                COURSE001
+                            </td>
+
+                            <td th:text="${quiz.description}">
+                                Quiz description
+                            </td>
+
+                            <td>
+                                <span
+                                    th:text="${quiz.published ? 'Published' : 'Draft'}"
+                                    th:class="${quiz.published ? 'quiz-status published' : 'quiz-status draft'}">
+                                    Draft
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+        <p class="footer-note">
+            Quizzer · Learning starts with curiosity.
+        </p>
+
+    </main>
+
+</body>
+</html>

@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 public class QuizPageController {
@@ -21,6 +19,7 @@ public class QuizPageController {
         this.quizService = quizService;
     }
 
+    // Show Create Quiz page
     @GetMapping("/quizzes/new")
     public String showAddQuizPage(Model model) {
 
@@ -29,18 +28,21 @@ public class QuizPageController {
         return "add-quiz";
     }
 
+    // Save a new quiz
     @PostMapping("/quizzes")
     public String addQuiz(@ModelAttribute("quiz") Quiz quiz) {
 
         quizService.addQuiz(quiz);
 
-        return "redirect:/quizzes/new?success";
+        return "redirect:/";
     }
 
+    // Show Teacher Dashboard
     @GetMapping("/")
-    public String showHomePage(Model model) {
+    public String showDashboard(Model model) {
+
         model.addAttribute("quizzes", quizService.getAllQuizzes());
-        return "quiz-list";
+
+        return "teacher-dashboard";
     }
-    
 }
