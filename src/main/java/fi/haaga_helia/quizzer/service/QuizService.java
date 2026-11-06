@@ -1,5 +1,6 @@
 package fi.haaga_helia.quizzer.service;
 
+import java.util.List;
 import fi.haaga_helia.quizzer.model.Quiz;
 import fi.haaga_helia.quizzer.repository.QuizRepository;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class QuizService {
 
     public Quiz addQuiz(Quiz quiz) {
     return quizRepository.save(quiz);
+    }
+
+    public List<Quiz> getAllQuizzes() {
+    return quizRepository.findAll();
 }
 }

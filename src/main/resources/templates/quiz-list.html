@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>My Quizzes </h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Quiz Name</th>
+                <th>Description</th>
+                <th>Course Code</th>
+                <th>Status</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="quiz : ${quizzes}">
+                <td th:text="${quiz.name}"></td>
+                <td th:text="${quiz.description}"></td>
+                <td th:text="${quiz.courseCode}"></td>
+                <td th:text="${quiz.published ? 'Published' : 'Unpublished'}"></td>
+                <td th:text="${quiz.createdAt}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/quizzes/new}">Add New Quiz</a>
+ 
+</body>
+</html>
