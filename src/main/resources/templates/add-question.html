@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Question | Quizzer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="brand"><span class="brand-icon">Q</span><span>Quizzer</span></div>
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+        <div class="user-profile"><span class="avatar">T</span><span>Teacher</span></div>
+    </header>
+
+    <main class="page-container">
+        <div class="page-heading">
+            <p class="breadcrumb">Questions / Add</p>
+            <h1 th:text="'Add a question to ' + ${quiz.name}">Add a question</h1>
+        </div>
+
+        <section class="form-card">
+            <form th:action="@{/quizzes/{id}/questions(id=${quiz.id})}" th:object="${question}" method="post">
+
+                <div class="form-group">
+                    <label for="questionText">Question <span>*</span></label>
+                    <input type="text" id="questionText" th:field="*{questionText}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="difficulty">Difficulty</label>
+                    <select id="difficulty" th:field="*{difficulty}">
+                        <option value="Easy">Easy</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/quizzes/{id}/questions(id=${quiz.id})}" class="cancel-button">Cancel</a>
+                    <button type="submit" class="submit-button">Add question <span>→</span></button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+</body>
+
+</html>

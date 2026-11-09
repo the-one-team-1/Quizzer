@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Questions | Quizzer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="brand"><span class="brand-icon">Q</span><span>Quizzer</span></div>
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+        <div class="user-profile"><span class="avatar">T</span><span>Teacher</span></div>
+    </header>
+
+    <main class="page-container">
+        <div class="page-heading">
+            <p class="breadcrumb">Dashboard / Quizzes / Questions</p>
+            <h1 th:text="'Questions: ' + ${quiz.name}">Questions</h1>
+        </div>
+
+        <section class="quiz-section">
+            <div class="card-heading">
+                <div>
+                    <h2>Questions</h2>
+                </div>
+                <a th:href="@{/quizzes/{id}/questions/new(id=${quiz.id})}" class="submit-button">
+                    + Add question
+                </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(questions)}" class="empty-state">
+                <h3>No questions yet</h3>
+                <p>Click Add question to get started.</p>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(questions)}" class="quiz-table-container">
+                <table class="quiz-table">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Difficulty</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="question : ${questions}">
+                            <td th:text="${question.questionText}">Question</td>
+                            <td th:text="${question.difficulty}">Normal</td>
+                            <td>
+                                <a th:href="@{/questions/{id}/options(id=${question.id})}" class="nav-link"
+                                    style="margin-right:10px;">
+                                    Answer options
+                                </a>
+                                <form
+                                    th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
+                                    method="post" style="display:inline">
+                                    <button type="submit" class="cancel-button"
+                                        style="padding:5px 10px;font-size:12px;">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <a th:href="@{/}">← Back to dashboard</a>
+    </main>
+
+</body>
+
+</html>

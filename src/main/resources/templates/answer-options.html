@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Answer Options | Quizzer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="brand"><span class="brand-icon">Q</span><span>Quizzer</span></div>
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+        <div class="user-profile"><span class="avatar">T</span><span>Teacher</span></div>
+    </header>
+
+    <main class="page-container">
+        <div class="page-heading">
+            <p class="breadcrumb">Questions / Answer options</p>
+            <h1>Answer options</h1>
+            <p class="subtitle" th:text="${question.questionText}">Question</p>
+        </div>
+
+        <section class="quiz-section">
+            <div class="card-heading">
+                <div>
+                    <h2>Options</h2>
+                </div>
+                <a th:href="@{/questions/{id}/options/new(id=${question.id})}" class="submit-button">
+                    + Add answer option
+                </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(options)}" class="empty-state">
+                <h3>No answer options yet</h3>
+                <p>Click Add answer option to get started.</p>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(options)}" class="quiz-table-container">
+                <table class="quiz-table">
+                    <thead>
+                        <tr>
+                            <th>Answer option</th>
+                            <th>Correct</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="option : ${options}">
+                            <td th:text="${option.optionText}">Option</td>
+                            <td th:text="${option.correct ? 'Correct' : 'Incorrect'}">Incorrect</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <a th:href="@{/quizzes/{id}/questions(id=${question.quiz.id})}">← Back to questions</a>
+    </main>
+
+</body>
+
+</html>

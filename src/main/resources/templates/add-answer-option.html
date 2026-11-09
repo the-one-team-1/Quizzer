@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Answer Option | Quizzer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="brand"><span class="brand-icon">Q</span><span>Quizzer</span></div>
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+        <div class="user-profile"><span class="avatar">T</span><span>Teacher</span></div>
+    </header>
+
+    <main class="page-container">
+        <div class="page-heading">
+            <p class="breadcrumb">Questions / Answer options / Add</p>
+            <h1>Add an answer option</h1>
+            <p class="subtitle" th:text="${question.questionText}">Question</p>
+        </div>
+
+        <section class="form-card">
+            <form th:action="@{/questions/{id}/options(id=${question.id})}" th:object="${option}" method="post">
+
+                <div class="form-group">
+                    <label for="optionText">Answer option <span>*</span></label>
+                    <input type="text" id="optionText" th:field="*{optionText}" required>
+                </div>
+
+                <div class="publish-section">
+                    <div>
+                        <h3>Correct answer</h3>
+                        <p>Mark this option as a correct answer.</p>
+                    </div>
+                    <input type="checkbox" th:field="*{correct}">
+                    <span>Correct</span>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/questions/{id}/options(id=${question.id})}" class="cancel-button">Cancel</a>
+                    <button type="submit" class="submit-button">Add option <span>→</span></button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+</body>
+
+</html>

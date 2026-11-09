@@ -1,10 +1,16 @@
 package fi.haaga_helia.quizzer.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 
 @Entity
@@ -23,6 +29,10 @@ public class Quiz {
     private boolean published;
 
     private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
+    private List<Question> questions;
 
     @PrePersist
     protected void onCreate() {
@@ -70,5 +80,9 @@ public class Quiz {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
     }
 }

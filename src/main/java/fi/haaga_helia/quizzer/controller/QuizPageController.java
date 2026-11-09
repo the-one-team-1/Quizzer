@@ -1,14 +1,14 @@
 
 package fi.haaga_helia.quizzer.controller;
 
-import fi.haaga_helia.quizzer.model.Quiz;
-import fi.haaga_helia.quizzer.service.QuizService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import fi.haaga_helia.quizzer.model.Quiz;
+import fi.haaga_helia.quizzer.service.QuizService;
 
 @Controller
 public class QuizPageController {

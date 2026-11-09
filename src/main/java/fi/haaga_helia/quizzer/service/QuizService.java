@@ -1,9 +1,11 @@
 package fi.haaga_helia.quizzer.service;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import fi.haaga_helia.quizzer.model.Quiz;
 import fi.haaga_helia.quizzer.repository.QuizRepository;
-import org.springframework.stereotype.Service;
 
 @Service
 public class QuizService {
@@ -21,4 +23,8 @@ public class QuizService {
     public List<Quiz> getAllQuizzes() {
     return quizRepository.findAll();
 }
+    public Quiz getQuizById(Long id) {
+        return quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found: " + id));
+    }
 }
