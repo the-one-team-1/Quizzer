@@ -46,12 +46,20 @@
                         <tr>
                             <th>Answer option</th>
                             <th>Correct</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="option : ${options}">
                             <td th:text="${option.optionText}">Option</td>
                             <td th:text="${option.correct ? 'Correct' : 'Incorrect'}">Incorrect</td>
+                            <td>
+                                <form
+                                    th:action="@{/questions/{questionId}/options/{id}/delete(questionId=${question.id}, id=${option.id})}"
+                                    method="post" style="display:inline">
+                                    <button type="submit" class="cancel-button">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
