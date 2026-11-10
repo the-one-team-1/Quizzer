@@ -398,6 +398,23 @@ body {
     color: #4b5563;
 }
 
+<!--Adds gaps between actions on the dashboard-->
+.quiz-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.quiz-actions form {
+    margin: 0;
+}
+
+.quiz-action-button {
+    display: inline-block;
+    text-decoration: none;
+}
+
 .quiz-table tbody tr:hover {
     background-color: #f9fafb;
 }

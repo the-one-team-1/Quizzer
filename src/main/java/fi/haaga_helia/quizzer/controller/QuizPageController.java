@@ -1,23 +1,38 @@
-
 package fi.haaga_helia.quizzer.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import fi.haaga_helia.quizzer.model.AnswerOption;
+import fi.haaga_helia.quizzer.model.Question;
 import fi.haaga_helia.quizzer.model.Quiz;
+import fi.haaga_helia.quizzer.repository.AnswerOptionRepository;
+import fi.haaga_helia.quizzer.repository.QuestionRepository;
+import fi.haaga_helia.quizzer.repository.QuizRepository;
 import fi.haaga_helia.quizzer.service.QuizService;
 
 @Controller
 public class QuizPageController {
 
     private final QuizService quizService;
+    private final QuizRepository quizRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerOptionRepository answerOptionRepository;
 
-    public QuizPageController(QuizService quizService) {
+    public QuizPageController(QuizService quizService, QuizRepository quizRepository,
+            QuestionRepository questionRepository,
+            AnswerOptionRepository answerOptionRepository) {
         this.quizService = quizService;
+        this.quizRepository = quizRepository;
+        this.questionRepository = questionRepository;
+        this.answerOptionRepository = answerOptionRepository;
     }
 
     // Show Create Quiz page
@@ -54,6 +69,23 @@ public class QuizPageController {
         quiz.setCourseCode(submittedQuiz.getCourseCode());
         quiz.setPublished(submittedQuiz.isPublished());
         quizService.addQuiz(quiz);
+        return "redirect:/";
+    }
+
+    // Delete a quiz and its contents
+    @Transactional
+    @PostMapping("/quizzes/{id}/delete")
+    public String deleteQuiz(@PathVariable Long id) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found: " + id));
+        List<Question> questions = questionRepository.findByQuizId(id);
+
+        for (Question question : questions) {
+            List<AnswerOption> options = answerOptionRepository.findByQuestionId(question.getId());
+            answerOptionRepository.deleteAll(options);
+        }
+
+        quizRepository.delete(quiz);
         return "redirect:/";
     }
 

@@ -118,6 +118,7 @@
 
                             <!-- ADDED: Questions link -->
                             <td>
+                                <div class="quiz-actions">
                                 <a th:href="@{/quizzes/{id}/questions(id=${quiz.id})}">
                                     Questions
                                 </a>
@@ -125,6 +126,11 @@
                                 <a th:href="@{/edit-quiz/{id}(id=${quiz.id})}">
                                     Edit Quiz
                                 </a>
+
+                                <form th:action="@{/quizzes/{id}/delete(id=${quiz.id})}" method="post">
+                                    <button type="submit">Delete Quiz</button>
+                                </form>
+                                </div>
                             </td>
 
                         </tr>
