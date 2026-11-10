@@ -48,6 +48,7 @@ public class AnswerOptionPageController {
         return "redirect:/questions/" + questionId + "/options";
     }
 
+    // Delete an answer
     @PostMapping("/questions/{questionId}/options/{id}/delete")
     public String deleteAnswer(@PathVariable Long questionId, @PathVariable Long id) {
         answerOptionRepository.deleteById(id);
