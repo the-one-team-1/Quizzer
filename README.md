@@ -3,7 +3,7 @@
 
 Quizzer is an educational application for quizzes. Using the application, teachers can create and manage multiple choice quizzes for their classrooms. The application allows teachers to organize quizzes by category and assign them to students. Students are able to access quizzes and track their results.
 
-The production environment URL in Rahti of the Backend Application: https://quizzer-git-quizzer.2.rahtiapp.fi/
+**Production environment (backend):** https://quizzer-git-quizzer.2.rahtiapp.fi/
 
 ## Team Members
 [Rebecca Paarent](https://github.com/reb-paarent)
@@ -11,20 +11,24 @@ The production environment URL in Rahti of the Backend Application: https://quiz
 [Dipen Rajbanshi](https://github.com/Dipen-Rajbanshi)
 [Polina Emelianova](https://github.com/pe010101)
 
-[Backlog](https://github.com/orgs/the-one-team-1/projects/2)
+[Quizzer project backlog](https://github.com/orgs/the-one-team-1/projects/2)
 
 ## Features
 
 ## Student interface 
-- multiple-choice questions
-- track scores and results
-- user-friendly interface
-- educational learning experience 
+- View published quizzes
+- Take multiple-choice quizzes
+- Get instant feedback on whether an answer was correct *(planned)*
+- View quiz results: total answers, correct answer percentage, and correct/wrong counts per question *(planned)*
+- Write, edit and delete quiz reviews, and read other students' reviews *(planned)*
+
 
 ## Teacher interface
-- create and manage quizzes
-- add, edit and delete questions
-- check and give feedback
+- Create, edit and delete quizzes
+- Add and delete questions
+- Add, edit and delete answer options
+- Manage quiz categories *(planned)*
+- View quiz results *(planned)*
 
 # Development Approach
 
