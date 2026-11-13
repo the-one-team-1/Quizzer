@@ -23,6 +23,7 @@ Quizzer is an educational application for quizzes. Using the application, teache
 - create and manage quizzes
 - add, edit and delete questions
 - check and give feedback
+- link to Rahti address: https://quizzer-git-quizzer.2.rahtiapp.fi/
 
 # Development Approach
 
