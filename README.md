@@ -54,3 +54,34 @@ Under Developement
    ```bash
    git clone https://github.com/the-one-team-1/Quizzer.git
    cd Quizzer
+   
+2. Start the Spring Boot application:
+
+   **macOS / Linux**
+
+   ```bash
+   chmod +x mvnw   # only needed the first time
+   ./mvnw spring-boot:run
+   ```
+
+   **Windows (Command Prompt or PowerShell)**
+
+   ```bash
+   .\mvnw.cmd spring-boot:run
+   ```
+
+3. Once the application has started, open <http://localhost:8080> in your browser. You should see the Teacher Dashboard.
+
+### Run the tests
+
+**macOS / Linux**
+
+```bash
+./mvnw test
+```
+
+**Windows**
+
+```bash
+.\mvnw.cmd test
+```
