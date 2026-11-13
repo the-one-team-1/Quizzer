@@ -1,55 +1,273 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Add Answer Option | Quizzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Answer Options | Quizzer</title>
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
+    <!-- Navigation -->
     <header class="navbar">
-        <div class="brand"><span class="brand-icon">Q</span><span>Quizzer</span></div>
+
+        <div class="brand">
+            <span class="brand-icon">Q</span>
+            <span>Quizzer</span>
+        </div>
+
         <nav>
             <a th:href="@{/}" class="nav-link">Dashboard</a>
             <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
         </nav>
-        <div class="user-profile"><span class="avatar">T</span><span>Teacher</span></div>
+
+        <div class="user-profile">
+            <span class="avatar">T</span>
+            <span>Teacher</span>
+        </div>
+
     </header>
 
+    <!-- Main Content -->
     <main class="page-container">
+
         <div class="page-heading">
-            <p class="breadcrumb">Questions / Answer options / Add</p>
-            <h1>Add an answer option</h1>
-            <p class="subtitle" th:text="${question.questionText}">Question</p>
+
+            <p class="breadcrumb">
+                Questions / Answer Options / Add
+            </p>
+
+            <h1>Add answer options</h1>
+
+            <p class="subtitle" th:text="${question.questionText}">
+                Question text
+            </p>
+
         </div>
 
         <section class="form-card">
-            <form th:action="@{/questions/{id}/options(id=${question.id})}" th:object="${option}" method="post">
 
-                <div class="form-group">
-                    <label for="optionText">Answer option <span>*</span></label>
-                    <input type="text" id="optionText" th:field="*{optionText}" required>
+            <div class="options-heading">
+
+                <div>
+                    <h2>Answer options</h2>
+                    <p>Add all possible answers and select the correct ones.</p>
                 </div>
 
-                <div class="publish-section">
-                    <div>
-                        <h3>Correct answer</h3>
-                        <p>Mark this option as a correct answer.</p>
+                <span class="step-label">Multiple options</span>
+
+            </div>
+
+            <!-- Validation Error -->
+            <div th:if="${errorMessage}"
+                 class="options-error"
+                 th:text="${errorMessage}">
+            </div>
+
+            <form
+                th:action="@{/questions/{id}/options(id=${question.id})}"
+                method="post"
+                id="optionsForm">
+
+                <!-- Answer Options -->
+                <div id="optionsContainer">
+
+                    <div class="option-row"
+                         th:each="optionText, stat : ${optionTexts}">
+
+                        <div class="option-input-area">
+
+                            <label th:for="${'option-' + stat.index}"
+                                   class="option-number"
+                                   th:text="${'Option ' + (stat.index + 1)}">
+                                Option 1
+                            </label>
+
+                            <input
+                                type="text"
+                                name="optionTexts"
+                                class="option-text-input"
+                                th:id="${'option-' + stat.index}"
+                                th:value="${optionText}"
+                                placeholder="Enter answer option..."
+                                required>
+
+                        </div>
+
+                        <label class="correct-checkbox">
+
+                            <input
+                                type="checkbox"
+                                name="correctIndexes"
+                                th:value="${stat.index}"
+                                th:checked="${#lists.contains(correctIndexes, stat.index)}">
+
+                            <span>Correct answer</span>
+
+                        </label>
+
+                        <button
+                            type="button"
+                            class="remove-option"
+                            onclick="removeOption(this)">
+                            Remove
+                        </button>
+
                     </div>
-                    <input type="checkbox" th:field="*{correct}">
-                    <span>Correct</span>
+
                 </div>
 
+                <!-- Add Another Option -->
+                <button
+                    type="button"
+                    class="add-option-button"
+                    onclick="addOption()">
+
+                    <span>+</span> Add another option
+
+                </button>
+
+                <!-- Form Actions -->
                 <div class="form-actions">
-                    <a th:href="@{/questions/{id}/options(id=${question.id})}" class="cancel-button">Cancel</a>
-                    <button type="submit" class="submit-button">Add option <span>→</span></button>
+
+                    <a
+                        th:href="@{/questions/{id}/options(id=${question.id})}"
+                        class="cancel-button">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="submit-button">
+                        Save all options →
+                    </button>
+
                 </div>
+
             </form>
+
         </section>
+
     </main>
 
-</body>
+    <!-- Template for new answer options -->
+    <template id="optionTemplate">
 
+        <div class="option-row">
+
+            <div class="option-input-area">
+
+                <label class="option-number">
+                    Option
+                </label>
+
+                <input
+                    type="text"
+                    name="optionTexts"
+                    class="option-text-input"
+                    placeholder="Enter answer option..."
+                    required>
+
+            </div>
+
+            <label class="correct-checkbox">
+
+                <input
+                    type="checkbox"
+                    name="correctIndexes"
+                    value="0">
+
+                <span>Correct answer</span>
+
+            </label>
+
+            <button
+                type="button"
+                class="remove-option"
+                onclick="removeOption(this)">
+                Remove
+            </button>
+
+        </div>
+
+    </template>
+
+    <!-- JavaScript -->
+    <script>
+
+        const optionsContainer =
+            document.getElementById("optionsContainer");
+
+        const optionTemplate =
+            document.getElementById("optionTemplate");
+
+        // Add another answer option
+        function addOption() {
+
+            const newOption =
+                optionTemplate.content.cloneNode(true);
+
+            optionsContainer.appendChild(newOption);
+
+            updateOptionNumbers();
+        }
+
+        // Remove an answer option
+        function removeOption(button) {
+
+            const rows =
+                optionsContainer.querySelectorAll(".option-row");
+
+            // Keep at least two answer fields
+            if (rows.length <= 2) {
+                alert("At least two answer options are required.");
+                return;
+            }
+
+            button.closest(".option-row").remove();
+
+            updateOptionNumbers();
+        }
+
+        // Update option numbers and checkbox indexes
+        function updateOptionNumbers() {
+
+            const rows =
+                optionsContainer.querySelectorAll(".option-row");
+
+            rows.forEach((row, index) => {
+
+                const label =
+                    row.querySelector(".option-number");
+
+                const input =
+                    row.querySelector(".option-text-input");
+
+                const checkbox =
+                    row.querySelector('input[name="correctIndexes"]');
+
+                label.textContent = "Option " + (index + 1);
+
+                input.id = "option-" + index;
+                label.htmlFor = input.id;
+
+                checkbox.value = index;
+
+                const removeButton =
+                    row.querySelector(".remove-option");
+
+                removeButton.disabled = rows.length <= 2;
+
+            });
+        }
+
+        // Set correct numbers when page loads
+        updateOptionNumbers();
+
+    </script>
+
+</body>
 </html>

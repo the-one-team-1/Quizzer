@@ -441,3 +441,162 @@ body {
     padding: 40px 20px;
     text-align: center;
 }
+
+
+/* Multiple Answer Options Form */
+
+.options-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 22px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.options-heading h2 {
+    font-size: 19px;
+    margin-bottom: 7px;
+}
+
+.options-heading p {
+    color: #8792a5;
+    font-size: 13px;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    margin-bottom: 14px;
+    background-color: #f8faff;
+    border: 1px solid #e5eaf3;
+    border-radius: 9px;
+}
+
+.option-input-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.option-number {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 9px;
+    color: #374151;
+}
+
+.option-text-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dce2eb;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+}
+
+.option-text-input:focus {
+    border-color: #315bea;
+    box-shadow: 0 0 0 3px rgba(49, 91, 234, 0.10);
+}
+
+.correct-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+}
+
+.correct-checkbox input {
+    width: 17px;
+    height: 17px;
+    accent-color: #315bea;
+    cursor: pointer;
+}
+
+.remove-option {
+    padding: 9px 12px;
+    border: 1px solid #ffe0e3;
+    border-radius: 6px;
+    background-color: #fff1f2;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.remove-option:hover:not(:disabled) {
+    background-color: #ffe4e6;
+}
+
+.remove-option:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.add-option-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 11px 16px;
+    background-color: #eef2ff;
+    color: #315bea;
+    border: 1px dashed #aabcfb;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-option-button:hover {
+    background-color: #e1e9ff;
+}
+
+.add-option-button span {
+    font-size: 19px;
+}
+
+.options-error {
+    padding: 13px 16px;
+    margin-bottom: 20px;
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+    background-color: #fff1f2;
+    color: #b91c1c;
+    font-size: 13px;
+}
+
+/* Responsive Answer Options Form */
+
+@media (max-width: 650px) {
+
+    .option-row {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .correct-checkbox {
+        padding: 5px 0;
+    }
+
+    .remove-option {
+        align-self: flex-start;
+    }
+
+    .options-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

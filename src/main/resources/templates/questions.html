@@ -53,9 +53,14 @@
                             <td th:text="${question.questionText}">Question</td>
                             <td th:text="${question.difficulty}">Normal</td>
                             <td>
-                                <a th:href="@{/questions/{id}/options(id=${question.id})}" class="nav-link"
-                                    style="margin-right:10px;">
-                                    Answer options
+                                <a th:href="@{/questions/{id}/options/new(id=${question.id})}"
+                                    class="quiz-action quiz-questions">
+                                        Add options
+                                </a>
+
+                                <a th:href="@{/questions/{id}/options(id=${question.id})}"
+                                    class="quiz-action quiz-edit">
+                                        View options
                                 </a>
                                 <form
                                     th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
