@@ -48,15 +48,14 @@
                             <td>
                                 <a th:href="@{/questions/{id}/options/new(id=${question.id})}"
                                     class="quiz-action quiz-questions">
-                                        Add options
+                                    Add options
                                 </a>
 
                                 <a th:href="@{/questions/{id}/options(id=${question.id})}"
                                     class="quiz-action quiz-edit">
-                                        View options
-                                <a th:href="@{/questions/{id}/options(id=${question.id})}" class="table-action-button">
-                                    Answer options
+                                    View options
                                 </a>
+
                                 <form
                                     class="delete"
                                     th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
