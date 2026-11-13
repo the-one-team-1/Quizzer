@@ -86,7 +86,19 @@ body {
 }
 
 .page-heading {
-    margin-bottom: 28px;
+    margin-bottom: 35px;
+}
+
+.page-heading-with-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-heading-with-action > .submit-button {
+    width: auto;
+    flex: 0 0 auto;
 }
 
 .breadcrumb {
@@ -306,6 +318,28 @@ body {
     background-color: #2449c8;
 }
 
+.table-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #dce2eb;
+    border-radius: 7px;
+    background-color: white;
+    color: #315bea;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: normal;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.table-action-button:hover {
+    background-color: #eef2ff;
+}
+
 /* Success message */
 .success-message {
     background-color: #e9f8ef;
@@ -398,21 +432,43 @@ body {
     color: #4b5563;
 }
 
-<!--Adds gaps between actions on the dashboard-->
+/* Styles for buttons on dashboard */
 .quiz-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    width: 100%;
+    min-width: 330px;
+    gap: 8px;
 }
 
-.quiz-actions form {
+.quiz-actions > a,
+.quiz-actions > form {
     margin: 0;
+    min-width: 0;
+}
+
+.quiz-actions > form {
+    display: flex;
 }
 
 .quiz-action-button {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid #dce2eb;
+    border-radius: 6px;
+    background-color: white;
+    color: #315bea;
+    font: inherit;
+    text-align: center;
     text-decoration: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
 }
 
 .quiz-table tbody tr:hover {
@@ -440,4 +496,19 @@ body {
 .empty-state {
     padding: 40px 20px;
     text-align: center;
+}
+
+.delete button {
+    background-color: #dc2626;
+    border: 1px solid #dc2626;
+    color: white;
+}
+
+.delete button:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+.return_nav {
+    margin-top: 4%;
 }

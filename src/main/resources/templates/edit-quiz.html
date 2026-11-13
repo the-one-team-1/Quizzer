@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -40,8 +39,6 @@
         <!-- Page Heading -->
         <div class="page-heading">
 
-            <p class="breadcrumb">Quizzes / Edit quiz</p>
-
             <h1>Edit quiz</h1>
 
         </div>
@@ -58,20 +55,14 @@
 
             <div class="card-heading">
 
-                <div>
-                    <h2>Quiz information</h2>
-                    <p>Enter the basic details of your quiz.</p>
-                </div>
-
-                <span class="step-label">STEP 1 OF 1</span>
+                <h2>Quiz information</h2>
+                <p>Enter the basic details of your quiz.</p>
 
             </div>
 
 
             <!-- Quiz Form -->
-            <form th:action="@{/edit-quiz/{id}(id=${quiz.id})}"
-                  th:object="${quiz}"
-                  method="post">
+            <form th:action="@{/edit-quiz/{id}(id=${quiz.id})}" th:object="${quiz}" method="post">
 
 
                 <!-- Quiz Name -->
@@ -81,13 +72,7 @@
                         Quiz name <span>*</span>
                     </label>
 
-                    <input
-                        type="text"
-                        id="name"
-                        th:field="*{name}"
-                        placeholder="e.g. The Scrum Framework"
-                        required
-                    >
+                    <input type="text" id="name" th:field="*{name}" placeholder="e.g. The Scrum Framework" required>
 
                     <small>
                         Choose a clear name for your quiz.
@@ -103,13 +88,8 @@
                         Description <span>*</span>
                     </label>
 
-                    <textarea
-                        id="description"
-                        th:field="*{description}"
-                        rows="4"
-                        placeholder="What will students learn from this quiz?"
-                        required
-                    ></textarea>
+                    <textarea id="description" th:field="*{description}" rows="4"
+                        placeholder="What will students learn from this quiz?" required></textarea>
 
                     <small>
                         Briefly explain the topics covered in this quiz.
@@ -125,13 +105,7 @@
                         Course code <span>*</span>
                     </label>
 
-                    <input
-                        type="text"
-                        id="courseCode"
-                        th:field="*{courseCode}"
-                        placeholder="e.g. SOF005AS3AE"
-                        required
-                    >
+                    <input type="text" id="courseCode" th:field="*{courseCode}" placeholder="e.g. SOF005AS3AE" required>
 
                     <small>
                         Enter the Haaga-Helia course code.
@@ -155,17 +129,11 @@
                 <!-- Form Buttons -->
                 <div class="form-actions">
 
-                    <button
-                        type="reset"
-                        class="cancel-button"
-                    >
+                    <button type="reset" class="cancel-button">
                         Reset changes
                     </button>
 
-                    <button
-                        type="submit"
-                        class="submit-button"
-                    >
+                    <button type="submit" class="submit-button">
                         Save Changes <span>→</span>
                     </button>
 
@@ -184,4 +152,5 @@
     </main>
 
 </body>
+
 </html>

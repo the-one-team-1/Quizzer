@@ -19,21 +19,14 @@
     </header>
 
     <main class="page-container">
-        <div class="page-heading">
-            <p class="breadcrumb">Dashboard / Quizzes / Questions</p>
+        <div class="page-heading page-heading-with-action">
             <h1 th:text="'Questions: ' + ${quiz.name}">Questions</h1>
+            <a th:href="@{/quizzes/{id}/questions/new(id=${quiz.id})}" class="submit-button">
+                + Add question
+            </a>
         </div>
 
         <section class="quiz-section">
-            <div class="card-heading">
-                <div>
-                    <h2>Questions</h2>
-                </div>
-                <a th:href="@{/quizzes/{id}/questions/new(id=${quiz.id})}" class="submit-button">
-                    + Add question
-                </a>
-            </div>
-
             <div th:if="${#lists.isEmpty(questions)}" class="empty-state">
                 <h3>No questions yet</h3>
                 <p>Click Add question to get started.</p>
@@ -45,7 +38,7 @@
                         <tr>
                             <th>Question</th>
                             <th>Difficulty</th>
-                            <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,11 +46,11 @@
                             <td th:text="${question.questionText}">Question</td>
                             <td th:text="${question.difficulty}">Normal</td>
                             <td>
-                                <a th:href="@{/questions/{id}/options(id=${question.id})}" class="nav-link"
-                                    style="margin-right:10px;">
+                                <a th:href="@{/questions/{id}/options(id=${question.id})}" class="table-action-button">
                                     Answer options
                                 </a>
                                 <form
+                                    class="delete"
                                     th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
                                     method="post" style="display:inline">
                                     <button type="submit" class="cancel-button"
@@ -69,7 +62,10 @@
                 </table>
             </div>
         </section>
-        <a th:href="@{/}">← Back to dashboard</a>
+        <div class="return_nav">
+            <a th:href="@{/}">← Back to dashboard</a>
+        </div>
+
     </main>
 
 </body>
