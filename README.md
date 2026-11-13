@@ -31,9 +31,26 @@ The production environment URL in Rahti of the Backend Application: https://quiz
 The project is developed incrementally through Sprints. Each Sprint introduces new features based on the Product Owner's requirements.
 
 ## Technologies
-- java
-- spring boot
-- maven 
+- Java
+- Spring Boot
+- Maven 
+- Thymeleaf
+- H2 Database (development)
+- PostgreSQL (production)
 
 ## Project status:
-under developement
+Under Developement
+
+## Developer guide
+
+## Prerequisities 
+- **Java 21** or higher (configured in `pom.xml`).
+- **Git** installed on your machine.
+- No separate Maven installation is required — the project includes the Maven Wrapper (`./mvnw`).
+
+### How to start the backend application
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/the-one-team-1/Quizzer.git
+   cd Quizzer
