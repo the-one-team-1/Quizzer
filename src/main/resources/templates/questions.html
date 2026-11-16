@@ -48,19 +48,22 @@
                             <td>
                                 <div class="question-actions" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; width: 100%; gap: 8px;">
                                     <a th:href="@{/questions/{id}/options/new(id=${question.id})}"
-                                        class="cancel-button question-action">
+                                        class="cancel-button question-action"
+                                        style="padding: 2px 4px;">
                                         Add options
                                     </a>
 
                                     <a th:href="@{/questions/{id}/options(id=${question.id})}"
-                                        class="cancel-button question-action">
+                                        class="cancel-button question-action"
+                                        style="padding: 2px 4px;">
                                         View options
                                     </a>
 
                                     <form
                                         class="delete"
                                         th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
-                                        method="post">
+                                        method="post"
+                                        style="padding: 2px 4px;">
                                         <button type="submit" class="cancel-button question-action">
                                             Delete Question
                                         </button>
