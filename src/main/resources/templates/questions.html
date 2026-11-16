@@ -49,13 +49,13 @@
                                 <div class="question-actions" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; width: 100%; gap: 8px;">
                                     <a th:href="@{/questions/{id}/options/new(id=${question.id})}"
                                         class="cancel-button question-action"
-                                        style="padding: 2px 4px;">
+                                        style="padding: 2px 4px; display: flex; align-items: center; justify-content: center;">
                                         Add options
                                     </a>
 
                                     <a th:href="@{/questions/{id}/options(id=${question.id})}"
                                         class="cancel-button question-action"
-                                        style="padding: 2px 4px;">
+                                        style="padding: 2px 4px; display: flex; align-items: center; justify-content: center;">
                                         View options
                                     </a>
 
@@ -63,7 +63,7 @@
                                         class="delete"
                                         th:action="@{/quizzes/{quizId}/questions/{id}/delete(quizId=${quiz.id}, id=${question.id})}"
                                         method="post"
-                                        style="padding: 2px 4px;">
+                                        style="padding: 2px 4px; display: flex; align-items: center; justify-content: center;">
                                         <button type="submit" class="cancel-button question-action">
                                             Delete Question
                                         </button>
