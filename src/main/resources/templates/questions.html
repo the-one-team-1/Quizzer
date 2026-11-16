@@ -46,7 +46,7 @@
                             <td th:text="${question.questionText}">Question</td>
                             <td th:text="${question.difficulty}">Normal</td>
                             <td>
-                                <div class="question-actions">
+                                <div class="question-actions" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; width: 100%; gap: 8px;">
                                     <a th:href="@{/questions/{id}/options/new(id=${question.id})}"
                                         class="cancel-button question-action">
                                         Add options
