@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 
@@ -30,6 +32,10 @@ public class Quiz {
 
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @JsonIgnore
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
     private List<Question> questions;
@@ -42,6 +48,17 @@ public class Quiz {
     public Quiz() {
         
     }
+
+    public Quiz(String name, String description, String courseCode, boolean published,
+         LocalDateTime createdAt, Category category) {
+            super();
+            this.name = name;
+            this.description = description;
+            this.courseCode = courseCode;
+            this.published = published;
+            this.createdAt = createdAt;
+            this.category = category;
+         }
 
     public String getName() {
         return name;
@@ -84,5 +101,13 @@ public class Quiz {
 
     public List<Question> getQuestions() {
         return questions;
+    }
+
+    public Category getCategory(){
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

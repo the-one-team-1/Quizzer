@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Categories | Quizzer</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+            <span class="brand-icon">Q</span>
+            <span>Quizzer</span>
+        </div>
+
+        <nav>
+            <a th:href="@{/}" class="nav-link active">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+        </nav>
+
+        <div class="user-profile">
+            <span class="avatar">T</span>
+            <span>Teacher</span>
+        </div>
+
+    </header>
+
+    <!--  Add Category Button -->
+    <form th:action="@{/add-category}" method="get">
+        <button type="submit" class="btn btn-primary">Add a Category</button>
+    </form>
+
+    <!-- Quiz Table -->
+    <div th:if="${not #lists.isEmpty(categories)}" class="category-table-container">
+
+        <table class="category-table">
+
+            <thead>
+                <tr>
+                    <th>Category name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="category : ${categories}">
+
+                    <td th:text="${category.name}">
+                        Category name
+                    </td>
+
+                    <td th:text="${category.description}">
+                        Description
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="return_nav">
+        <a th:href="@{/}">← Back to dashboard</a>
+    </div>
+
+    <!-- Footer -->
+    <p class="footer-note">
+        Quizzer · Learning starts with curiosity.
+    </p>
+
+</body>
+
+</html>

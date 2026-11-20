@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Category | Quizzer</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+            <span class="brand-icon">Q</span>
+            <span>Quizzer</span>
+        </div>
+
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/quizzes/new}" class="nav-link active">Create Quiz</a>
+        </nav>
+
+        <div class="user-profile">
+            <span class="avatar">T</span>
+            <span>Teacher</span>
+        </div>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="page-container">
+
+        <!-- Page Heading -->
+        <div class="page-heading">
+
+            <h1>Create a new category</h1>
+
+            <p class="subtitle">
+                Create a category to organize quizzes.
+            </p>
+
+        </div>
+
+
+        <!-- Success Message -->
+        <div th:if="${param.success}" class="success-message">
+            Category successfully saved!
+        </div>
+
+
+        <!-- Category Form -->
+        <form th:action="@{/save_category}" th:object="${category}" method="post">
+
+
+            <!-- Category Name -->
+            <div class="form-group">
+
+                <label for="name">
+                    Category name <span>*</span>
+                </label>
+
+                <input type="text" id="name" th:field="*{name}" required>
+
+                <small>
+                    Choose a name for your category.
+                </small>
+
+            </div>
+
+
+            <!-- Description -->
+            <div class="form-group">
+
+                <label for="description">
+                    Description <span>*</span>
+                </label>
+
+                <textarea id="description" 
+                th:field="*{description}" 
+                rows="4" 
+                required
+                >
+                </textarea>
+
+                <small>
+                    Briefly explain the topics covered in this quiz.
+                </small>
+
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="form-actions">
+
+                <button type="reset" class="cancel-button">
+                    Clear form
+                </button>
+
+                <button type="submit" class="submit-button">
+                    Add Category <span>→</span>
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- Footer -->
+        <p class="footer-note">
+            Quizzer · Learning starts with curiosity.
+        </p>
+
+    </main>
+
+</body>
+
+</html>

@@ -118,6 +118,28 @@
                 </div>
 
 
+                <!-- Category -->
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <select id="category" name="categoryId">
+                        <option value="">No category</option>
+                        <option th:each="categoryOption : ${categories}"
+                            th:value="${categoryOption.id}"
+                            th:text="${categoryOption.name}">
+                        </option>
+                    </select>
+
+                    <small>
+                        Choose an existing category, or leave this blank.
+                    </small>
+
+                </div>
+
+
                 <!-- Published Toggle -->
                 <div class="publish-section">
                     <div>

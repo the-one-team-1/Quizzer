@@ -49,6 +49,11 @@
 
         </div>
 
+        <!-- Category Section -->
+        <form th:action="@{/categories}" method="get">
+            <button type="submit" class="btn btn-primary">See All Categories</button>
+        </form>
+
         <!-- Quiz Section -->
         <section class="quiz-section">
 
@@ -84,6 +89,7 @@
                             <th>Quiz name</th>
                             <th>Course code</th>
                             <th>Description</th>
+                            <th>Category</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -105,6 +111,10 @@
                                 Quiz description
                             </td>
 
+                            <td th:text="${quiz.category != null ? quiz.category.name : 'Uncategorized'}">
+                                Uncategorized
+                            </td>
+
                             <td>
                                 <span th:text="${quiz.published ? 'Published' : 'Draft'}"
                                     th:class="${quiz.published ? 'quiz-status published' : 'quiz-status draft'}">
@@ -115,13 +125,11 @@
                             <!-- ADDED: Questions link -->
                             <td>
                                 <div class="quiz-actions">
-                                    <a class="quiz-action-button"
-                                        th:href="@{/quizzes/{id}/questions(id=${quiz.id})}">
+                                    <a class="quiz-action-button" th:href="@{/quizzes/{id}/questions(id=${quiz.id})}">
                                         Add Questions
                                     </a>
 
-                                    <a class="quiz-action-button"
-                                        th:href="@{/edit-quiz/{id}(id=${quiz.id})}">
+                                    <a class="quiz-action-button" th:href="@{/edit-quiz/{id}(id=${quiz.id})}">
                                         Edit Quiz
                                     </a>
 
