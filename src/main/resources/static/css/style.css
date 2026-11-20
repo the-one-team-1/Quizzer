@@ -465,7 +465,8 @@ body {
 }
 
 /* Styles for buttons on dashboard */
-.quiz-actions {
+.quiz-actions,
+.category-actions {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
@@ -475,16 +476,20 @@ body {
 }
 
 .quiz-actions > a,
-.quiz-actions > form {
+.quiz-actions > form,
+.category-actions > a,
+.category-actions > form {
     margin: 0;
     min-width: 0;
 }
 
-.quiz-actions > form {
+.quiz-actions > form,
+.category-actions > form {
     display: flex;
 }
 
-.quiz-action-button {
+.quiz-action-button,
+.category-action-button {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -58,6 +58,7 @@
                     <tr>
                         <th>Category name</th>
                         <th>Description</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -73,6 +74,15 @@
                             Description
                         </td>
 
+                        <td>
+                            <div class="category-actions">
+                                <form class="delete" th:action="@{/categories/{id}/delete(id=${category.id})}"
+                                    method="post">
+                                    <button class="category-action-button" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+
                     </tr>
 
                 </tbody>
@@ -85,7 +95,7 @@
         <p class="footer-note">
             Quizzer · Learning starts with curiosity.
         </p>
-        
+
     </main>
 
 </body>
