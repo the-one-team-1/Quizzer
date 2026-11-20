@@ -48,6 +48,12 @@ The project is developed incrementally through Sprints. Each Sprint introduces n
 ## Project status:
 Under Developement
 
+## Definition of done:
+- Agreed upon tasks are complete.
+- All team members confirm have tested the code and found no errors.
+- The application is deployed to a production environment.
+- Documentation is updated.
+
 ## Developer guide
 
 ## Prerequisities 
