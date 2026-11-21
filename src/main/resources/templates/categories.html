@@ -23,6 +23,7 @@
         <nav>
             <a th:href="@{/}" class="nav-link active">Dashboard</a>
             <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+            <a th:href="@{/categories}" class="nav-link">Manage Categories</a>
         </nav>
 
         <div class="user-profile">
@@ -32,51 +33,70 @@
 
     </header>
 
-    <!--  Add Category Button -->
-    <form th:action="@{/add-category}" method="get">
-        <button type="submit" class="btn btn-primary">Add a Category</button>
-    </form>
+    <!-- Main Content -->
+    <main class="page-container">
 
-    <!-- Quiz Table -->
-    <div th:if="${not #lists.isEmpty(categories)}" class="category-table-container">
+        <!--  Page Heading -->
+        <div class="page-heading page-heading-with-action">
+            <div>
+                <h1>Categories</h1>
+                <p class="subtitle">
+                    Organize your quizzes.
+                </p>
+            </div>
+            <form th:action="@{/add-category}" method="get">
+                <button type="submit" class="submit-button">Add a category</button>
+            </form>
+        </div>
 
-        <table class="category-table">
+        <!-- Quiz Table -->
+        <div th:if="${not #lists.isEmpty(categories)}" class="category-table-container">
 
-            <thead>
-                <tr>
-                    <th>Category name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
+            <table class="category-table">
 
-            <tbody>
+                <thead>
+                    <tr>
+                        <th>Category name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                <tr th:each="category : ${categories}">
+                <tbody>
 
-                    <td th:text="${category.name}">
-                        Category name
-                    </td>
+                    <tr th:each="category : ${categories}">
 
-                    <td th:text="${category.description}">
-                        Description
-                    </td>
+                        <td th:text="${category.name}">
+                            Category name
+                        </td>
 
-                </tr>
+                        <td th:text="${category.description}">
+                            Description
+                        </td>
 
-            </tbody>
+                        <td>
+                            <div class="category-actions">
+                                <form class="delete" th:action="@{/categories/{id}/delete(id=${category.id})}"
+                                    method="post">
+                                    <button class="category-action-button" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
 
-        </table>
+                    </tr>
 
-    </div>
+                </tbody>
 
-    <div class="return_nav">
-        <a th:href="@{/}">← Back to dashboard</a>
-    </div>
+            </table>
 
-    <!-- Footer -->
-    <p class="footer-note">
-        Quizzer · Learning starts with curiosity.
-    </p>
+        </div>
+
+        <!-- Footer -->
+        <p class="footer-note">
+            Quizzer · Learning starts with curiosity.
+        </p>
+
+    </main>
 
 </body>
 
