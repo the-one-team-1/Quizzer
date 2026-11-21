@@ -1,7 +1,7 @@
-// Communication with the backend REST API 
-// Components call these functions 
+// Communication with the backend REST API
+// Components call these functions
 
-import type { Category, Question, QuestionResult, Quiz } from "../types";
+import type { AnswerResponse, Category, Question, QuestionResult, Quiz } from "../types";
 
 export const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL;
 
@@ -18,9 +18,13 @@ async function errorMessage(response: Response): Promise<string> {
     const body = await response.json();
     if (body.message) return body.message;
   } catch {
-
+    // the reply had no JSON body
   }
   return "Request failed with status " + response.status;
+}
+
+export function getQuizzes(): Promise<Quiz[]> {
+  return getJson<Quiz[]>("/api/quizzes");
 }
 
 export function getQuiz(quizId: number): Promise<Quiz> {
@@ -31,7 +35,7 @@ export function getQuestions(quizId: number): Promise<Question[]> {
   return getJson<Question[]>("/api/quizzes/" + quizId + "/questions");
 }
 
-export async function submitAnswer(answerOptionId: number): Promise<void> {
+export async function submitAnswer(answerOptionId: number): Promise<AnswerResponse> {
   const response = await fetch(BACKEND_URL + "/api/answers", {
     method: "POST",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
@@ -40,10 +44,15 @@ export async function submitAnswer(answerOptionId: number): Promise<void> {
   if (!response.ok) {
     throw new Error(await errorMessage(response));
   }
+  return response.json() as Promise<AnswerResponse>;
 }
 
 export function getResults(quizId: number): Promise<QuestionResult[]> {
   return getJson<QuestionResult[]>("/api/quizzes/" + quizId + "/results");
+}
+
+export function getCategories(): Promise<Category[]> {
+  return getJson<Category[]>("/api/categories");
 }
 
 export function getCategory(categoryId: number): Promise<Category> {

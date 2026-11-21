@@ -8,4 +8,6 @@ import fi.haaga_helia.quizzer.model.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByQuizId(Long quizId);
+
+    long countByQuizId(Long quizId);
 }

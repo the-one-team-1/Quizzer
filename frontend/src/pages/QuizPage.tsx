@@ -6,11 +6,15 @@ import QuestionCard from "../components/QuestionCard";
 import { byDifficulty, formatDate } from "../utils";
 import { ErrorMessage, Loading } from "../components/Status";
 
-// See the quizs questions
+// Take a quiz: one question at a time, then a summary of your own score
 export default function QuizPage() {
   const quizId = Number(useParams().quizId);
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [current, setCurrent] = useState(0);
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -26,6 +30,32 @@ export default function QuizPage() {
   if (error) return <ErrorMessage message={error} />;
   if (!quiz) return <Loading />;
 
+  const total = questions.length;
+  const doneCount = finished ? total : current + (answered ? 1 : 0);
+  const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
+  const isLast = current + 1 >= total;
+
+  function handleAnswered(correct: boolean) {
+    setAnswered(true);
+    if (correct) setScore((value) => value + 1);
+  }
+
+  function handleNext() {
+    if (isLast) {
+      setFinished(true);
+    } else {
+      setCurrent(current + 1);
+      setAnswered(false);
+    }
+  }
+
+  function handleRestart() {
+    setCurrent(0);
+    setAnswered(false);
+    setScore(0);
+    setFinished(false);
+  }
+
   return (
     <>
       <Link className="back" to="/">← All quizzes</Link>
@@ -40,16 +70,55 @@ export default function QuizPage() {
         <p>{quiz.description}</p>
       </section>
 
-      {questions.length === 0 && <p className="empty">This quiz has no questions yet.</p>}
+      {total === 0 && <p className="empty">This quiz has no questions yet.</p>}
 
-      {questions.map((question, index) => (
-        <QuestionCard key={question.id} question={question} number={index + 1} total={questions.length} />
-      ))}
+      {total > 0 && (
+        <div
+          className="progress"
+          role="progressbar"
+          aria-label="Quiz progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={percent}
+        >
+          <div style={{ width: percent + "%" }} />
+        </div>
+      )}
 
-      {questions.length > 0 && (
-        <p className="next-step">
-          Done? <Link to={"/quizzes/" + quiz.id + "/results"}>See the results of this quiz →</Link>
-        </p>
+      {total > 0 && !finished && (
+        <>
+          <QuestionCard
+            key={questions[current].id}
+            question={questions[current]}
+            number={current + 1}
+            total={total}
+            onAnswered={handleAnswered}
+          />
+          {answered && (
+            <div className="quiz-actions">
+              <button type="button" onClick={handleNext}>
+                {isLast ? "Finish quiz" : "Next question →"}
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {finished && (
+        <section className="panel">
+          <h2>Quiz finished</h2>
+          <div className="stats">
+            <div className="stat"><strong>{total}</strong><span>Questions</span></div>
+            <div className="stat"><strong>{score}</strong><span>Correct</span></div>
+            <div className="stat"><strong>{total - score}</strong><span>Wrong</span></div>
+          </div>
+          <p className="next-step">
+            <button type="button" onClick={handleRestart}>Try again</button>
+          </p>
+          <p className="next-step">
+            <Link to={"/quizzes/" + quiz.id + "/results"}>See how everyone answered →</Link>
+          </p>
+        </section>
       )}
     </>
   );
