@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haaga_helia.quizzer.model.AnswerOption;
+import fi.haaga_helia.quizzer.model.Category;
 import fi.haaga_helia.quizzer.model.Question;
 import fi.haaga_helia.quizzer.model.Quiz;
-import fi.haaga_helia.quizzer.model.Category;
 import fi.haaga_helia.quizzer.repository.AnswerOptionRepository;
+import fi.haaga_helia.quizzer.repository.CategoryRepository;
 import fi.haaga_helia.quizzer.repository.QuestionRepository;
 import fi.haaga_helia.quizzer.repository.QuizRepository;
-import fi.haaga_helia.quizzer.repository.CategoryRepository;
 import fi.haaga_helia.quizzer.service.QuizService;
 
 @Controller
@@ -108,7 +108,7 @@ public class QuizPageController {
 
         model.addAttribute("quizzes", quizService.getAllQuizzes());
 
-        return "teacher-dashboard";
+        return "student-dashboard";
     }
 
     // Handles empty categories and category errors

@@ -17,14 +17,20 @@ public class QuizService {
     }
 
     public Quiz addQuiz(Quiz quiz) {
-    return quizRepository.save(quiz);
+        return quizRepository.save(quiz);
     }
 
     public List<Quiz> getAllQuizzes() {
-    return quizRepository.findAll();
-}
+        return quizRepository.findAll();
+    }
+
     public Quiz getQuizById(Long id) {
         return quizRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz not found: " + id));
     }
+
+    public List<Quiz> getPublishedQuizzes() {
+        return quizRepository.findByPublishedTrue();
+    }
+
 }

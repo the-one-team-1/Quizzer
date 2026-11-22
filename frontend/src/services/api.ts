@@ -17,9 +17,7 @@ async function errorMessage(response: Response): Promise<string> {
   try {
     const body = await response.json();
     if (body.message) return body.message;
-  } catch {
-
-  }
+  } catch { /* empty */ }
   return "Request failed with status " + response.status;
 }
 
@@ -29,6 +27,10 @@ export function getQuiz(quizId: number): Promise<Quiz> {
 
 export function getQuestions(quizId: number): Promise<Question[]> {
   return getJson<Question[]>("/api/quizzes/" + quizId + "/questions");
+}
+
+export function getPublishedQuizzes(): Promise<Quiz[]> {
+  return getJson<Quiz[]>("/api/quizzes/published");
 }
 
 export async function submitAnswer(answerOptionId: number): Promise<void> {

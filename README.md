@@ -85,6 +85,10 @@ Under Developement
 
 3. Once the application has started, open <http://localhost:8080> in your browser. You should see the Teacher Dashboard.
 
+For the local student dashboard, run the frontend on `http://localhost:5173`.
+The published-quiz endpoint allows requests from that origin; other frontend origins
+require explicit CORS configuration.
+
 ### Run the tests
 
 **macOS / Linux**
