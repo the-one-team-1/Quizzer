@@ -8,9 +8,11 @@ import Paper from '@mui/material/Paper';
 // List of published quizzes. 
 
 import { useEffect, useState } from 'react';
-import type { Quiz } from '../types';
-import { getPublishedQuizzes } from '../services/api';
+import type { Category, Quiz } from '../types';
+import { getCategories, getPublishedQuizzes } from '../services/api';
 import { formatDate } from '../utils';
+import QuizCard from '../components/QuizCard';
+import { ErrorMessage, Loading } from '../components/Status';
 // // Front page of the student dashboard.
 // type Quiz = {
 //   name: string;
@@ -24,14 +26,38 @@ import { formatDate } from '../utils';
 
 
 export default function QuizListPage() {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [quizzes, setQuizzes] = useState<Quiz[] | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [filter, setFilter] = useState("all");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    getPublishedQuizzes()
-    .then(setQuizzes)
+    Promise.all([getPublishedQuizzes(), getCategories()])
+    .then(([loadedQuizzes, loadedCategories]) => {
+      setQuizzes(loadedQuizzes);
+      setCategories(loadedCategories);
+    })
     .catch((err: Error) => setError(err.message));
   }, []);
+
+  if (error) return <ErrorMessage message={error} />;
+  if (!quizzes) return <Loading />;
+
+  const visibleQuizzes = quizzes.filter((quiz) => {
+    if (filter === "all") return true;
+    if (filter === "none") return quiz.category === null;
+    return quiz.category !== null && String(quiz.category.id) === filter;
+  });
+  const uncategorizedCount = quizzes.filter((quiz) => quiz.category === null).length;
+
+  function chip(key: string, label: string, count: number) {
+    return (
+      <button key={key} type="button" className={"chip" + (filter === key ? " active" : "")}
+        aria-pressed={filter === key} onClick={() => setFilter(key)}>
+        {label} <span className="chip-count">{count}</span>
+      </button>
+    );
+  }
 
   return (
     <>
@@ -41,10 +67,18 @@ export default function QuizListPage() {
         <p>Answer questions from your courses and get instant feedback.</p>
       </section>
 
+      <section className="chips" aria-label="Filter quizzes by category">
+        {chip("all", "All", quizzes.length)}
+        {categories.map((category) =>
+          chip(String(category.id), category.name,
+            quizzes.filter((quiz) => quiz.category?.id === category.id).length),
+        )}
+        {uncategorizedCount > 0 && chip("none", "Uncategorized", uncategorizedCount)}
+      </section>
+
       <section className="panel">
         <h2>Quizzes</h2>
         
-        {error && <p role="alert">{error}</p>}
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -57,7 +91,7 @@ export default function QuizListPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {quizzes.map((quiz) => (
+              {visibleQuizzes.map((quiz) => (
                 <TableRow
                   key={quiz.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -75,6 +109,16 @@ export default function QuizListPage() {
           </Table>
         </TableContainer>
       </section>
+
+      {visibleQuizzes.length === 0 ? (
+        <p className="empty">No published quizzes here yet.</p>
+      ) : (
+        <div className="card-grid">
+          {visibleQuizzes.map((quiz) => (
+            <QuizCard key={quiz.id} quiz={quiz} />
+          ))}
+        </div>
+      )}
     </>
   );
 }

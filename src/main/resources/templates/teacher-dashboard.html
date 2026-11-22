@@ -23,6 +23,7 @@
         <nav>
             <a th:href="@{/}" class="nav-link active">Dashboard</a>
             <a th:href="@{/quizzes/new}" class="nav-link">Create Quiz</a>
+            <a th:href="@{/categories}" class="nav-link">Manage Categories</a>
         </nav>
 
         <div class="user-profile">
@@ -49,10 +50,6 @@
 
         </div>
 
-        <!-- Category Section -->
-        <form th:action="@{/categories}" method="get">
-            <button type="submit" class="btn btn-primary">See All Categories</button>
-        </form>
 
         <!-- Quiz Section -->
         <section class="quiz-section">
@@ -149,6 +146,7 @@
             </div>
 
         </section>
+
 
         <!-- Footer -->
         <p class="footer-note">

@@ -486,3 +486,122 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+/* Category filter chips on the front page */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.chip {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-weight: 500;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.chip-count {
+  opacity: .7;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+/* Quiz cards on the front page */
+.quiz-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .15s, transform .15s;
+}
+
+.quiz-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.quiz-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.quiz-card h3 {
+  margin: 12px 0 6px;
+  font-size: 19px;
+}
+
+.quiz-card p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  flex: 1;
+}
+
+.quiz-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Progress bar and actions on the quiz page */
+.progress {
+  height: 8px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 12px 0 0;
+}
+
+.progress div {
+  height: 100%;
+  background: var(--accent);
+  transition: width .25s;
+}
+
+.quiz-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+/* Options after an answer has been submitted */
+.option.locked {
+  cursor: default;
+}
+
+.option.locked:hover {
+  border-color: var(--line);
+}
+
+.option.correct-option,
+.option.correct-option:hover {
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+
+.option.wrong-option,
+.option.wrong-option:hover {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}

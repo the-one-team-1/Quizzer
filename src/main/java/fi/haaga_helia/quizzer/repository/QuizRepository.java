@@ -8,4 +8,6 @@ import fi.haaga_helia.quizzer.model.Quiz;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByPublishedTrue();
+
+    List<Quiz> findByCategoryIdAndPublishedTrue(Long categoryId);
 }
