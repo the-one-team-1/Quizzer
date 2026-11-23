@@ -5,7 +5,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 // List of published quizzes. 
+import { Link } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
 import type { Category, Quiz } from '../types';
@@ -97,12 +99,12 @@ export default function QuizListPage() {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {quiz.name}
+                    <Link to={"/quizzes/" + quiz.id}>{quiz.name}</Link> 
                   </TableCell>
-                  <TableCell align="right">{quiz.description}</TableCell>
-                  <TableCell align="right">{quiz.courseCode}</TableCell>
-                  <TableCell align="right">{quiz.category?.name ?? "-"}</TableCell>
-                  <TableCell align="right">{formatDate(quiz.createdAt)}</TableCell>
+                  <TableCell align="left">{quiz.description}</TableCell>
+                  <TableCell align="left">{quiz.courseCode}</TableCell>
+                  <TableCell align="left">{quiz.category?.name ?? "-"}</TableCell>
+                  <TableCell align="left">{formatDate(quiz.createdAt)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
