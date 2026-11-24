@@ -101,13 +101,26 @@ public class AnswerOptionPageController {
             correctIndexes = new ArrayList<>();
         }
 
-        // Count non-empty answer options
+        // Count non-empty options submitted in the current form
         long validOptionCount = optionTexts.stream()
                 .filter(text -> text != null && !text.isBlank())
                 .count();
 
-        // Check whether at least one non-empty option is marked correct
-        boolean hasCorrectAnswer = false;
+        // Count options that already exist in the database
+        List<AnswerOption> existingOptions =
+                answerOptionRepository.findByQuestionId(questionId);
+
+        long existingOptionCount = existingOptions.size();
+
+        // Calculate the total number of options after saving
+        long totalOptionCount = existingOptionCount + validOptionCount;
+
+        // Check whether an existing option is already correct
+        boolean hasExistingCorrectAnswer = existingOptions.stream()
+                .anyMatch(AnswerOption::isCorrect);
+
+        // Check whether a new non-empty option is marked correct
+        boolean hasNewCorrectAnswer = false;
 
         for (Integer index : correctIndexes) {
 
@@ -117,21 +130,27 @@ public class AnswerOptionPageController {
                     && optionTexts.get(index) != null
                     && !optionTexts.get(index).isBlank()) {
 
-                hasCorrectAnswer = true;
+                hasNewCorrectAnswer = true;
                 break;
             }
         }
 
+        // Check whether the question will have at least one correct answer
+        boolean hasCorrectAnswer =
+                hasExistingCorrectAnswer || hasNewCorrectAnswer;
+
         // Validate answer options
         String errorMessage = null;
 
-        if (validOptionCount < 2) {
+        if (totalOptionCount < 2) {
 
-            errorMessage = "Please enter at least two answer options.";
+            errorMessage =
+                    "A question must have at least two answer options.";
 
         } else if (!hasCorrectAnswer) {
 
-            errorMessage = "Please select at least one correct answer.";
+            errorMessage =
+                    "Please select at least one correct answer.";
         }
 
         // If validation fails, show the form again
@@ -145,7 +164,7 @@ public class AnswerOptionPageController {
             return "add-answer-option";
         }
 
-        // Create and save all non-empty options
+        // Create and save all non-empty new options
         List<AnswerOption> newOptions = new ArrayList<>();
 
         for (int i = 0; i < optionTexts.size(); i++) {
@@ -166,7 +185,7 @@ public class AnswerOptionPageController {
             }
         }
 
-        // Save all answer options together
+        // Save all new answer options together
         answerOptionRepository.saveAll(newOptions);
 
         // Return to the answer options list
