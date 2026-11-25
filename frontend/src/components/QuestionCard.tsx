@@ -10,7 +10,7 @@ interface QuestionCardProps {
 }
 
 // Answer one question and get feedback.
-// After submitting, the options are locked and the correct ones are highlighted.
+// After submitting, the options are locked and the chosen answer is highlighted.
 export default function QuestionCard({ question, number, total, onAnswered }: QuestionCardProps) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [result, setResult] = useState<AnswerResponse | null>(null);
@@ -39,7 +39,7 @@ export default function QuestionCard({ question, number, total, onAnswered }: Qu
     let css = "option";
     if (result) {
       css += " locked";
-      if (result.correctOptionIds.includes(optionId)) css += " correct-option";
+      if (result.correct && result.correctOptionIds.includes(optionId)) css += " correct-option";
       else if (optionId === selectedId) css += " wrong-option";
     } else if (optionId === selectedId) {
       css += " selected";
@@ -81,7 +81,7 @@ export default function QuestionCard({ question, number, total, onAnswered }: Qu
         <p className={"feedback " + (result.correct ? "correct" : "wrong")} role="status">
           {result.correct
             ? "That is correct, good job!"
-            : "That is not correct. The right answer is highlighted."}
+            : "That is not correct."}
         </p>
       )}
       {error && <p className="feedback wrong" role="alert">{error}</p>}

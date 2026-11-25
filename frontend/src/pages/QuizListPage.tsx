@@ -1,18 +1,7 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
-// List of published quizzes. 
-import { Link } from 'react-router-dom';
-
 import { useEffect, useState } from 'react';
 import type { Category, Quiz } from '../types';
 import { getCategories, getPublishedQuizzes } from '../services/api';
-import { formatDate } from '../utils';
+
 import QuizCard from '../components/QuizCard';
 import { ErrorMessage, Loading } from '../components/Status';
 // // Front page of the student dashboard.
@@ -25,7 +14,6 @@ import { ErrorMessage, Loading } from '../components/Status';
 // };
 
 //const Quizzes: Quiz[] = [];
-
 
 export default function QuizListPage() {
   const [quizzes, setQuizzes] = useState<Quiz[] | null>(null);
@@ -76,40 +64,6 @@ export default function QuizListPage() {
             quizzes.filter((quiz) => quiz.category?.id === category.id).length),
         )}
         {uncategorizedCount > 0 && chip("none", "Uncategorized", uncategorizedCount)}
-      </section>
-
-      <section className="panel">
-        <h2>Quizzes</h2>
-        
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="left">Description</TableCell>
-                <TableCell align="left">Course</TableCell>
-                <TableCell align="left">Category</TableCell>
-                <TableCell align="left">Added on</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {visibleQuizzes.map((quiz) => (
-                <TableRow
-                  key={quiz.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Link to={"/quizzes/" + quiz.id}>{quiz.name}</Link> 
-                  </TableCell>
-                  <TableCell align="left">{quiz.description}</TableCell>
-                  <TableCell align="left">{quiz.courseCode}</TableCell>
-                  <TableCell align="left">{quiz.category?.name ?? "-"}</TableCell>
-                  <TableCell align="left">{formatDate(quiz.createdAt)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
       </section>
 
       {visibleQuizzes.length === 0 ? (
