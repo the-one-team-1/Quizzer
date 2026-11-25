@@ -295,7 +295,6 @@ fieldset {
 
 .option.selected {
   border-color: var(--accent);
-  background: var(--accent-soft);
 }
 
 .option input {
