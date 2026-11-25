@@ -102,3 +102,14 @@ require explicit CORS configuration.
 ```bash
 .\mvnw.cmd test
 ```
+## How to start the frontend application
+
+You need [Node.js](https://nodejs.org/) (version 20 or newer). Run the commands in the `frontend` folder:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173. The backend must also be running at http://localhost:8080 (see the main README).
