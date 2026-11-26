@@ -11,6 +11,7 @@ import fi.haaga_helia.quizzer.dto.ApiDto.QuestionDto;
 import fi.haaga_helia.quizzer.dto.ApiDto.QuestionResultDto;
 import fi.haaga_helia.quizzer.dto.ApiDto.QuizDto;
 import fi.haaga_helia.quizzer.service.QuizService;
+import io.swagger.v3.oas.annotations.Operation;
 
 // Student REST API for quizzes (published quizzes only)
 @RestController
@@ -23,6 +24,10 @@ public class QuizController {
         this.quizService = quizService;
     }
 
+         @Operation(
+        summary = "Get all published quizzes",
+        description = "Returns only quizzes that the teacher has published"
+    )
     @GetMapping("/published")
     public List<QuizDto> getPublishedQuizzes() {
         return quizService.getPublishedQuizzes();
