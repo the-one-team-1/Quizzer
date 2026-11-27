@@ -40,7 +40,7 @@ The application's data model consists of the following:
 - `Quiz`: represents a quiz which has a unique id, name, description, course code, boolean publication status, and a creation timestamp. Each quiz can have many questions. Each quiz can belong to only one category.
 - `Question`: represents a question within a quiz containing a unique id, text content, and a difficulty setting. A question can have more than one answer option. Each question belongs to one quiz. Each question can have multiple answer options and answers.
 - `Answer Option`: represents answer options for a quiz question including a unique id, text content, and a boolean value for whether or not it is correct.
-- `Answer`: represents answers options selected by quiz takers and contains a unique id, the answer option selected, the question that it belongs to, creation time, and a boolean value for whether or not it is correct.
+- `Answer`: represents answers options selected by quiz takers and contains a unique id, creation time, and a boolean value for whether or not it is correct.
 
 ```mermaid
 erDiagram
@@ -69,8 +69,6 @@ erDiagram
    }
    Answer {
       Long id PK
-      Question question
-      AnswerOption answerOption
       boolean correct
       LocalDateTime answeredAt
    }
