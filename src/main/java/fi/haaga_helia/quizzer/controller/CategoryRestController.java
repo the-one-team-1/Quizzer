@@ -14,10 +14,15 @@ import fi.haaga_helia.quizzer.dto.ApiDto.QuizDto;
 import fi.haaga_helia.quizzer.model.Category;
 import fi.haaga_helia.quizzer.repository.CategoryRepository;
 import fi.haaga_helia.quizzer.service.QuizService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 // Student REST API for categories and their published quizzes
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Categories", description = "Quiz categories and the published quizzes in them")
 public class CategoryRestController {
 
     private final CategoryRepository categoryRepository;
@@ -29,6 +34,11 @@ public class CategoryRestController {
     }
 
     // GET /api/categories -> [{ id, name, description }, ...]
+    @Operation(summary = "Get all categories",
+            description = "Returns all categories with their name and description")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Categories retrieved successfully")
+    })
     @GetMapping
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
@@ -37,6 +47,12 @@ public class CategoryRestController {
     }
 
     // GET /api/categories/{id} -> one category
+    @Operation(summary = "Get a category by id",
+            description = "Returns the category with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category with the provided id retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
+    })
     @GetMapping("/{id}")
     public Category getCategory(@PathVariable Long id) {
         return categoryRepository.findById(id)
@@ -45,6 +61,12 @@ public class CategoryRestController {
     }
 
     // GET /api/categories/{id}/quizzes -> published quizzes of the category
+    @Operation(summary = "Get the quizzes of a category",
+            description = "Returns the published quizzes of the category with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Published quizzes of the category retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
+    })
     @GetMapping("/{id}/quizzes")
     public List<QuizDto> getCategoryQuizzes(@PathVariable Long id) {
         if (!categoryRepository.existsById(id)) {
