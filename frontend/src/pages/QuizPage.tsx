@@ -12,7 +12,7 @@ export default function QuizPage() {
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [current, setCurrent] = useState(0);
-  const [answered, setAnswered] = useState(false);
+  const [currentAnswerCorrect, setCurrentAnswerCorrect] = useState<boolean | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [error, setError] = useState("");
@@ -31,13 +31,14 @@ export default function QuizPage() {
   if (!quiz) return <Loading />;
 
   const total = questions.length;
+  const answered = currentAnswerCorrect !== null;
   const doneCount = finished ? total : current + (answered ? 1 : 0);
   const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
   const isLast = current + 1 >= total;
 
   function handleAnswered(correct: boolean) {
-    setAnswered(true);
-    if (correct) setScore((value) => value + 1);
+    setScore((value) => value - (currentAnswerCorrect ? 1 : 0) + (correct ? 1 : 0));
+    setCurrentAnswerCorrect(correct);
   }
 
   function handleNext() {
@@ -45,13 +46,13 @@ export default function QuizPage() {
       setFinished(true);
     } else {
       setCurrent(current + 1);
-      setAnswered(false);
+      setCurrentAnswerCorrect(null);
     }
   }
 
   function handleRestart() {
     setCurrent(0);
-    setAnswered(false);
+    setCurrentAnswerCorrect(null);
     setScore(0);
     setFinished(false);
   }

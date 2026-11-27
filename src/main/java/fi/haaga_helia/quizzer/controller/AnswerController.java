@@ -16,10 +16,15 @@ import fi.haaga_helia.quizzer.model.AnswerOption;
 import fi.haaga_helia.quizzer.model.Question;
 import fi.haaga_helia.quizzer.repository.AnswerOptionRepository;
 import fi.haaga_helia.quizzer.repository.AnswerRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 // Student REST API: submit an answer
 @RestController
 @RequestMapping("/api/answers")
+@Tag(name = "Answers", description = "Submitting students' answers")
 public class AnswerController {
 
     private final AnswerRepository answerRepository;
@@ -32,6 +37,15 @@ public class AnswerController {
     }
 
     // POST /api/answers  { "answerOptionId": 5 } -> { correct, correctOptionIds }
+    @Operation(summary = "Submit an answer",
+            description = "Stores the answer option that the student chose for a question. "
+                    + "The request body is { \"answerOptionId\": 1 }. "
+                    + "The response tells whether the answer was correct and which options are correct.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Answer saved successfully"),
+            @ApiResponse(responseCode = "400", description = "Answer option id is not provided"),
+            @ApiResponse(responseCode = "404", description = "Answer option with the provided id does not exist, or its quiz is not published")
+    })
     @PostMapping
     public AnswerResponse submitAnswer(@RequestBody AnswerRequest request) {
         if (request == null || request.answerOptionId() == null) {

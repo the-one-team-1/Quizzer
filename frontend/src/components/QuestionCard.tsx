@@ -10,38 +10,40 @@ interface QuestionCardProps {
 }
 
 // Answer one question and get feedback.
-// After submitting, the options are locked and the chosen answer is highlighted.
+// Answers can be changed and resubmitted until moving to the next question.
 export default function QuestionCard({ question, number, total, onAnswered }: QuestionCardProps) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [submittedId, setSubmittedId] = useState<number | null>(null);
   const [result, setResult] = useState<AnswerResponse | null>(null);
-  const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (selectedId === null || result) return;
+    if (selectedId === null || isSubmitting) return;
 
-    setSending(true);
+    setIsSubmitting(true);
     setError("");
     try {
       // The backend stores the answer and tells if it was correct
       const response = await submitAnswer(selectedId);
       setResult(response);
+      setSubmittedId(selectedId);
       onAnswered(response.correct);
     } catch (e) {
       setError((e as Error).message);
     } finally {
-      setSending(false);
+      setIsSubmitting(false);
     }
   }
 
   function optionClass(optionId: number): string {
     let css = "option";
-    if (result) {
-      css += " locked";
+    if (result && submittedId === optionId) {
       if (result.correct && result.correctOptionIds.includes(optionId)) css += " correct-option";
-      else if (optionId === selectedId) css += " wrong-option";
-    } else if (optionId === selectedId) {
+      else if (!result.correct) css += " wrong-option";
+    }
+    if (optionId === selectedId) {
       css += " selected";
     }
     return css;
@@ -55,7 +57,7 @@ export default function QuestionCard({ question, number, total, onAnswered }: Qu
       </div>
       <h3>{question.questionText}</h3>
 
-      <fieldset disabled={result !== null}>
+      <fieldset disabled={isSubmitting}>
         <legend className="visually-hidden">Answer options</legend>
         {question.answerOptions.map((option) => (
           <label key={option.id} className={optionClass(option.id)}>
@@ -71,11 +73,9 @@ export default function QuestionCard({ question, number, total, onAnswered }: Qu
         ))}
       </fieldset>
 
-      {!result && (
-        <button type="submit" disabled={selectedId === null || sending}>
-          {sending ? "Sending…" : "Submit your answer"}
-        </button>
-      )}
+      <button type="submit" disabled={selectedId === null || isSubmitting}>
+        {isSubmitting ? "Sending…" : "Submit your answer"}
+      </button>
 
       {result && (
         <p className={"feedback " + (result.correct ? "correct" : "wrong")} role="status">
