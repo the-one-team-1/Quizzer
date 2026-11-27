@@ -3,7 +3,9 @@
 
 Quizzer is an educational application for quizzes. Using the application, teachers can create and manage multiple choice quizzes for their classrooms. The application allows teachers to organize quizzes by category and assign them to students. Students are able to access quizzes and track their results.
 
-**Production environment (backend):** https://quizzer-git-quizzer001.2.rahtiapp.fi/
+[Student Dashboard](https://quizzer-47kc.onrender.com/) \
+[Teacher Dashboard](https://quizzer-git-quizzer001.2.rahtiapp.fi/)
+
 
 ## Team Members
 [Rebecca Paarent](https://github.com/reb-paarent)
