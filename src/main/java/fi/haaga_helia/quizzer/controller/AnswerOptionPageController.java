@@ -60,10 +60,14 @@ public class AnswerOptionPageController {
 
         model.addAttribute("question", question);
 
-        // Start with four empty answer fields
+        List<String> optionTexts = answerOptionRepository
+                .findByQuestionId(questionId).isEmpty()
+                ? List.of("", "", "", "")
+                : List.of("");
+
         model.addAttribute(
                 "optionTexts",
-                List.of("", "", "", "")
+                optionTexts
         );
 
         model.addAttribute(
