@@ -18,22 +18,68 @@ Quizzer is an educational application for quizzes. Using the application, teache
 
 ## Features
 
-## Student interface 
+### Student interface 
 - View published quizzes
 - Take multiple-choice quizzes
 - Get instant feedback on whether an answer was correct *(planned)*
-- View quiz results: total answers, correct answer percentage, and correct/wrong counts per question *(planned)*
+- View quiz results: total answers, correct answer percentage, and correct/wrong counts per question
 - Write, edit and delete quiz reviews, and read other students' reviews *(planned)*
 
 
-## Teacher interface
+### Teacher interface
 - Create, edit and delete quizzes
 - Add and delete questions
 - Add, edit and delete answer options
-- Manage quiz categories *(planned)*
-- View quiz results *(planned)*
+- Manage quiz categories
+- View quiz results
 
-# Development Approach
+## Data Model
+
+The application's data model consists of the following:
+- `Category`: represents a group of related quizzes with a unique id, a name, and a description. Each category can have many quizzes.
+- `Quiz`: represents a quiz which has a unique id, name, description, course code, boolean publication status, and a creation timestamp. Each quiz can have many questions. Each quiz can belong to zero or one categories.
+- `Question`: represents a question within a quiz containing a unique id, text content, and a difficulty setting. A question can have more than one answer option. Each question belongs to one quiz. Each question can have multiple answer options and answers.
+- `Answer Option`: represents answer options for a quiz question including a unique id, text content, and a boolean value for whether or not it is correct.
+- `Answer`: represents answers options selected by quiz takers and contains a unique id, creation time, and a boolean value for whether or not it is correct.
+
+```mermaid
+erDiagram
+   Category {
+      Long id PK
+      String name
+      String description
+   }
+   Quiz {
+      Long id PK
+      String name
+      String description
+      String courseCode
+      boolean published
+      LocalDateTime createdAt
+   }
+   Question {
+      Long id PK
+      String questionText
+      String difficulty
+   }
+   AnswerOption {
+      Long id PK
+      String optionText
+      boolean correct
+   }
+   Answer {
+      Long id PK
+      boolean correct
+      LocalDateTime answeredAt
+   }
+   Category one or zero--0+ Quiz: "organizes"
+   Quiz 1--0+ Question: "contains"
+   Question 1--0+ AnswerOption: "contains"
+   Question 1--0+ Answer: "answered"
+   AnswerOption 1--0+ Answer: "selected"
+```
+
+## Development Approach
 
 The project is developed incrementally through Sprints. Each Sprint introduces new features based on the Product Owner's requirements.
 
