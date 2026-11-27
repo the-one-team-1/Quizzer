@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fi.haaga_helia.quizzer.dto.ApiDto.QuestionDto;
 import fi.haaga_helia.quizzer.dto.ApiDto.QuestionResultDto;
 import fi.haaga_helia.quizzer.dto.ApiDto.QuizDto;
+import fi.haaga_helia.quizzer.exception.BadRequestException;
 import fi.haaga_helia.quizzer.service.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -42,6 +43,12 @@ public class QuizController {
     // GET /api/quizzes/{id}
     @GetMapping("/{id}")
     public QuizDto getQuiz(@PathVariable Long id) {
+
+        if (id <= 0) {
+            throw new BadRequestException(
+                "Quiz id must be positive"
+            );
+        }
         return quizService.getPublishedQuiz(id);
     }
 

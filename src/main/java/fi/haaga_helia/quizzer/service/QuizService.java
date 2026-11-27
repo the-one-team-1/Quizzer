@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import fi.haaga_helia.quizzer.dto.ApiDto.CategoryDto;
@@ -34,7 +35,6 @@ public class QuizService {
     }
 
     // ----- Used by the teacher pages -----
-
     public Quiz addQuiz(Quiz quiz) {
         return quizRepository.save(quiz);
     }
@@ -49,7 +49,6 @@ public class QuizService {
     }
 
     // ----- Used by the student REST API (only published quizzes) -----
-
     public List<QuizDto> getPublishedQuizzes() {
         return quizRepository.findByPublishedTrue().stream().map(this::toDto).toList();
     }
@@ -59,12 +58,25 @@ public class QuizService {
                 .map(this::toDto).toList();
     }
 
-    public QuizDto getPublishedQuiz(Long id) {
+    public QuizDto getPublishedQuiz(@PathVariable Long id) {
+        if (id <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Id must be positive"
+            );
+        }
+
         return toDto(findPublished(id));
     }
 
     public List<QuestionDto> getQuestions(Long quizId) {
+        if (quizId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Id must be positive"
+            );
+        }
+
         findPublished(quizId);
+
         return questionRepository.findByQuizId(quizId).stream()
                 .map(question -> new QuestionDto(
                         question.getId(),
@@ -77,7 +89,15 @@ public class QuizService {
     }
 
     public List<QuestionResultDto> getResults(Long quizId) {
+
+        if (quizId <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Id must be positive"
+            );
+        }
+
         findPublished(quizId);
+
         return questionRepository.findByQuizId(quizId).stream()
                 .map(question -> {
                     long total = answerRepository.countByQuestionId(question.getId());
@@ -104,10 +124,12 @@ public class QuizService {
 
     private QuizDto toDto(Quiz quiz) {
         CategoryDto category = null;
+        
         if (quiz.getCategory() != null) {
             category = new CategoryDto(quiz.getCategory().getId(), quiz.getCategory().getName(),
                     quiz.getCategory().getDescription());
         }
+
         return new QuizDto(quiz.getId(), quiz.getName(), quiz.getDescription(), quiz.getCourseCode(),
                 quiz.isPublished(), quiz.getCreatedAt(), category,
                 questionRepository.countByQuizId(quiz.getId()));

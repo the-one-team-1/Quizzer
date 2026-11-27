@@ -10,12 +10,10 @@ import org.springframework.context.annotation.Bean;
 
 import fi.haaga_helia.quizzer.model.AnswerOption;
 import fi.haaga_helia.quizzer.model.Category;
-import fi.haaga_helia.quizzer.model.Message;
 import fi.haaga_helia.quizzer.model.Question;
 import fi.haaga_helia.quizzer.model.Quiz;
 import fi.haaga_helia.quizzer.repository.AnswerOptionRepository;
 import fi.haaga_helia.quizzer.repository.CategoryRepository;
-import fi.haaga_helia.quizzer.repository.MessageRepository;
 import fi.haaga_helia.quizzer.repository.QuestionRepository;
 import fi.haaga_helia.quizzer.repository.QuizRepository;
 
@@ -27,13 +25,10 @@ public class QuizzerBackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner generateTestData(MessageRepository messageRepository, QuizRepository quizRepository,
+	public CommandLineRunner generateTestData(QuizRepository quizRepository,
 			CategoryRepository categoryRepository, QuestionRepository questionRepository,
 			AnswerOptionRepository answerOptionRepository) {
 		return args -> {
-			if (messageRepository.count() == 0) {
-				messageRepository.save(new Message("Hello world!"));
-			}
 			if (quizRepository.count() == 0) {
 				Category programming = getOrCreateCategory(categoryRepository, "Programming", "Programming languages and concepts.");
 				Category web = getOrCreateCategory(categoryRepository, "Web Development", "Web technologies.");

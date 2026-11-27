@@ -1,18 +1,17 @@
 package fi.haaga_helia.quizzer;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 import fi.haaga_helia.quizzer.model.AnswerOption;
 import fi.haaga_helia.quizzer.model.Category;
@@ -20,7 +19,6 @@ import fi.haaga_helia.quizzer.model.Question;
 import fi.haaga_helia.quizzer.model.Quiz;
 import fi.haaga_helia.quizzer.repository.AnswerOptionRepository;
 import fi.haaga_helia.quizzer.repository.CategoryRepository;
-import fi.haaga_helia.quizzer.repository.MessageRepository;
 import fi.haaga_helia.quizzer.repository.QuestionRepository;
 import fi.haaga_helia.quizzer.repository.QuizRepository;
 
@@ -28,7 +26,6 @@ class SampleQuizDataTests {
 
 	@Test
 	void seedsPublishedQuizzesWhenEmpty() throws Exception {
-		MessageRepository messages = mock(MessageRepository.class);
 		QuizRepository quizzes = mock(QuizRepository.class);
 		CategoryRepository categories = mock(CategoryRepository.class);
 		QuestionRepository questions = mock(QuestionRepository.class);
@@ -38,7 +35,7 @@ class SampleQuizDataTests {
 		when(categories.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 		when(quizzes.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-		new QuizzerBackendApplication().generateTestData(messages, quizzes, categories, questions, answerOptions).run();
+		new QuizzerBackendApplication().generateTestData(quizzes, categories, questions, answerOptions).run();
 
 		ArgumentCaptor<List<Quiz>> saved = ArgumentCaptor.captor();
 		verify(quizzes).saveAll(saved.capture());
@@ -72,14 +69,13 @@ class SampleQuizDataTests {
 
 	@Test
 	void leavesExistingQuizzesAlone() throws Exception {
-		MessageRepository messages = mock(MessageRepository.class);
 		QuizRepository quizzes = mock(QuizRepository.class);
 		CategoryRepository categories = mock(CategoryRepository.class);
 		QuestionRepository questions = mock(QuestionRepository.class);
 		AnswerOptionRepository answerOptions = mock(AnswerOptionRepository.class);
 		when(quizzes.count()).thenReturn(1L);
 
-		new QuizzerBackendApplication().generateTestData(messages, quizzes, categories, questions, answerOptions).run();
+		new QuizzerBackendApplication().generateTestData(quizzes, categories, questions, answerOptions).run();
 
 		verify(quizzes, never()).saveAll(any());
 		verify(categories, never()).save(any(Category.class));
